@@ -1,47 +1,94 @@
 # python3
+# pylint: disable=missing-module-docstring,missing-class-docstring,missing-function-docstring,line-too-long
 
-class Query:
+class PhonebookQuery:
+    ACTION_ADD = 'add'
+    ACTION_FIND = 'find'
+    ACTION_REMOVE = 'del'
+
+    actions = [
+        ACTION_ADD,
+        ACTION_FIND,
+        ACTION_REMOVE
+    ]
+
     def __init__(self, query):
-        self.type = query[0]
+        self.action = query[0]
         self.number = int(query[1])
-        if self.type == 'add':
-            self.name = query[2]
+
+        if self.action not in self.actions:
+            return
+
+        if self.action == self.ACTION_ADD:
+            self.number_alias = query[2] # dynamic prop lol
+
+    def get_action(self):
+        print(self.action)
+        return self.action
+
+    def get_number(self):
+        return self.number
+
+    def get_alias(self):
+        return self.number_alias
+
+    def log(self):
+        return [self.action, self.number, getattr(self, 'number_alias', None)]
+
+class Phonebook: # methods will return appropriate messages in case something goes wrong in given constraints, (ex. not found)
+                 # later will be processed in process_queries() method
+    def __init__(self):
+        self.entries = {} # no phonebook import support sorry not sorry
+
+    def add_entry(self, number, alias):
+        self.entries[number] = alias # not using built-in dict methods just for fun
+
+    def del_entry(self, number):
+        if number in self.entries:
+            del self.entries[number]
+
+    def get_entry(self, number):
+        if number in self.entries:
+            return self.entries[number]
+
+        return 'not found'
 
 def read_queries():
-    n = int(input())
-    return [Query(input().split()) for i in range(n)]
+    query_amount = int(input())
+    # this is overall very dirty but since we only need to solve the problem via simple script i guess its ok
+    return [PhonebookQuery(input().split()) for i in range(query_amount)]
 
-def write_responses(result):
+def show_results(result):
+    if not result:
+        return
+
     print('\n'.join(result))
 
-def process_queries(queries):
-    result = []
-    # Keep list of all existing (i.e. not deleted yet) contacts.
-    contacts = []
-    for cur_query in queries:
-        if cur_query.type == 'add':
-            # if we already have contact with such number,
-            # we should rewrite contact's name
-            for contact in contacts:
-                if contact.number == cur_query.number:
-                    contact.name = cur_query.name
-                    break
-            else: # otherwise, just add it
-                contacts.append(cur_query)
-        elif cur_query.type == 'del':
-            for j in range(len(contacts)):
-                if contacts[j].number == cur_query.number:
-                    contacts.pop(j)
-                    break
-        else:
-            response = 'not found'
-            for contact in contacts:
-                if contact.number == cur_query.number:
-                    response = contact.name
-                    break
-            result.append(response)
-    return result
+def process_queries(queries, phonebook):
+    results = []
+
+    for query in queries:
+        queried_number = query.get_number()
+
+        match query.get_action():
+            case PhonebookQuery.ACTION_ADD:
+                phonebook.add_entry(queried_number, query.get_alias())
+            case PhonebookQuery.ACTION_FIND:
+                results.append(phonebook.get_entry(queried_number))
+            case PhonebookQuery.ACTION_REMOVE:
+                if not phonebook.get_entry(queried_number):
+                    return
+
+                phonebook.del_entry(queried_number)
+
+
+    print(results)
+    return results
+
+
 
 if __name__ == '__main__':
-    write_responses(process_queries(read_queries()))
-
+    phonebook = Phonebook()
+    show_results(
+        process_queries(read_queries(), phonebook)
+    )

@@ -1,18 +1,19 @@
+[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-24ddc0f5d75046c5622901739e7c5dd533143b0c8e959d652212380cedb1ea36.svg)](https://classroom.github.com/a/l1HD7v9k)
 [![Open in Codespaces](https://classroom.github.com/assets/launch-codespace-7f7980b617ed060a017424585567c406b6ee15c891e84e1186181d67ecf80aa0.svg)](https://classroom.github.com/open-in-codespaces?assignment_repo_id=10880633)
-# Problem:  Phone  book
-## Problem Intro duction
+# Problem:  Phone book
+## Problem Introduction
 In  this  problem  you  will  implement  a  simple  phone  book  manager.
 
 ### Problem Description
-**Task.** In this task your goal is to implement a simple phone book manager. It should b e able to pro cess thefollowing  typ es  of  user’s  queries:∙
+**Task.** In this task your goal is to implement a simple phone book manager. It should be able to process the following  types  of  user’s  queries:∙
 
-   + **Add** number  name. It means that the user adds a person with name name and phone number number to the phone book. If there exists a user with such numb er already, then your manager has  to  overwrite  the  corresponding  name.∙
+   + **Add** number  name. It means that the user adds a person with name name and phone number number to the phonebook. If there exists a user with such number already, then your manager has to overwrite the corresponding name.∙
     
-   + **Del** number.  It  means  that  the  manager  should  erase  a  person  with  number numberfrom  the  phoneb o ok.  If  there  is  no  such  person,  then  it  should  just  ignore  the  query.∙
+   + **Del** number.  It  means  that  the  manager  should  erase  a  person  with  number numberfrom  the  phonebook.  If  there  is  no  such  person,  then  it  should  just  ignore  the  query.∙
     
    + **Find** number. It means that the user looks for a person with phone number number. The manager should reply with the appropriate name, or with string “not found" (without quotes) if there is no  such  person  in  the  book.
     
-**Input  Format.** There  is  a  single  integer N in  the  first  line  —  the  number  of  queries.  It’s  followed  by N lines,  each  of  them  contains  one  query  in  the  format  described  above.
+**Input  Format.** There is a single integer N in the first line — the number of queries.  It’s  followed  by N lines,  each  of  them  contains  one  query  in  the  format  described  above.
 
 **Constraints.** 1≤N≤10<sup>5</sup>. All phone numbers consist of decimal digits, they don’t have leading zeros, and each  of  them  has  no  more  than 7 digits.  All  names  are  non-empty  strings  of  latin  letters,  and  each  of them  has  length  at  most 15.  It’s  guaranteed  that  there  is  no  person  with  name  “not  found". 
 
